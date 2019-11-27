@@ -1,5 +1,7 @@
 package io.handyprojects.schedulerservice.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
@@ -10,24 +12,26 @@ import java.util.Objects;
 @Table(name = "plan", schema = "scheduler")
 public class Plan {
 
+    private static final long serialVersionUID = 1L;
+
     private Long id;
     private String name;
-    private String cronExpression;
+    private String cronString;
     private boolean active;
     private List<Job> jobs = new ArrayList<>();
 
     protected Plan() {
     }
 
-    public Plan(String name, String cronExpression, boolean active) {
+    public Plan(String name, String cronString, boolean active) {
         setName(name);
-        setCronExpression(cronExpression);
+        setCronString(cronString);
         setActive(active);
     }
 
-    public Plan(String name, String cronExpression, boolean active, List<Job> jobs) {
+    public Plan(String name, String cronString, boolean active, List<Job> jobs) {
         setName(name);
-        setCronExpression(cronExpression);
+        setCronString(cronString);
         setActive(active);
         setJobs(jobs);
     }
@@ -54,13 +58,13 @@ public class Plan {
     }
 
     @NotBlank
-    @Column(name = "cron_expression", nullable = false)
-    public String getCronExpression() {
-        return cronExpression;
+    @Column(name = "cron_string", nullable = false)
+    public String getCronString() {
+        return cronString;
     }
 
-    public void setCronExpression(String cronExpression) {
-        this.cronExpression = cronExpression;
+    public void setCronString(String cronString) {
+        this.cronString = cronString;
     }
 
     @Column(name = "active", nullable = false)
@@ -73,6 +77,7 @@ public class Plan {
     }
 
     @OneToMany(fetch = FetchType.LAZY)
+    @JsonIgnore //to prevent JsonMappingException: failed to lazily initialize a collection of ... todo: fix it
     public List<Job> getJobs() {
         return jobs;
     }
@@ -99,7 +104,7 @@ public class Plan {
         return "Plan{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", cronExpression='" + cronExpression + '\'' +
+                ", cronExpression='" + cronString + '\'' +
                 ", active=" + active +
                 '}';
     }

@@ -7,6 +7,8 @@ import javax.validation.constraints.NotEmpty;
 @Table(name = "job", schema = "scheduler")
 public class Job {
 
+    private static final long serialVersionUID = 1L;
+
     private Long id;
     private String curlCommand;
     private int order;
