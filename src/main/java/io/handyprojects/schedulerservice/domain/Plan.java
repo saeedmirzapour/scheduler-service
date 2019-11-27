@@ -1,6 +1,7 @@
 package io.handyprojects.schedulerservice.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.handyprojects.schedulerservice.config.constraint.CronString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -57,7 +58,7 @@ public class Plan {
         this.name = name;
     }
 
-    @NotBlank
+    @CronString
     @Column(name = "cron_string", nullable = false)
     public String getCronString() {
         return cronString;
