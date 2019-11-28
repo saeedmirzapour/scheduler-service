@@ -1,7 +1,8 @@
 package io.handyprojects.schedulerservice.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.handyprojects.schedulerservice.config.constraint.CronString;
+import io.handyprojects.schedulerservice.config.serializer.PlanSerializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -11,6 +12,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "plan", schema = "scheduler")
+@JsonSerialize(using = PlanSerializer.class)
 public class Plan {
 
     private static final long serialVersionUID = 1L;
@@ -77,8 +79,7 @@ public class Plan {
         this.active = active;
     }
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JsonIgnore //to prevent JsonMappingException: failed to lazily initialize a collection of ... todo: fix it
+    @OneToMany(mappedBy = "plan")
     public List<Job> getJobs() {
         return jobs;
     }

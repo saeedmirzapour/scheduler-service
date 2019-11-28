@@ -1,10 +1,14 @@
 package io.handyprojects.schedulerservice.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.handyprojects.schedulerservice.config.serializer.JobSerializer;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "job", schema = "scheduler")
+@JsonSerialize(using = JobSerializer.class)
 public class Job {
 
     private static final long serialVersionUID = 1L;
@@ -12,6 +16,8 @@ public class Job {
     private Long id;
     private String curlCommand;
     private int order;
+    private Plan plan;
+    private boolean active;
 
     @Id
     @GeneratedValue
@@ -41,5 +47,23 @@ public class Job {
 
     public void setOrder(int order) {
         this.order = order;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    public Plan getPlan() {
+        return plan;
+    }
+
+    public void setPlan(Plan plan) {
+        this.plan = plan;
+    }
+
+    @Column(nullable = false)
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
