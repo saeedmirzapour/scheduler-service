@@ -5,6 +5,8 @@ import io.handyprojects.schedulerservice.exception.DuplicatePlanNameException;
 import io.handyprojects.schedulerservice.exception.PlanNotFoundException;
 import io.handyprojects.schedulerservice.repository.PlanRepository;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,5 +56,15 @@ public class PlanServiceImpl implements PlanService {
     public void deactivate(Long planId) {
         Plan plan = planRepository.findById(planId).orElseThrow(PlanNotFoundException::new);
         plan.setActive(false);
+    }
+
+    @Override
+    public Plan get(Long planId) {
+        return planRepository.findByIdHavingJobs(planId).orElseThrow(PlanNotFoundException::new);
+    }
+
+    @Override
+    public Page<Plan> getPageable(Pageable pageable) {
+        return planRepository.findAll(pageable);
     }
 }
