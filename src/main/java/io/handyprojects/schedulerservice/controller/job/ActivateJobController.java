@@ -1,21 +1,21 @@
-package io.handyprojects.schedulerservice.controller.plan;
+package io.handyprojects.schedulerservice.controller.job;
 
 import io.handyprojects.schedulerservice.service.PlanManagementService;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class RemovePlanController {
+public class ActivateJobController {
 
     private final PlanManagementService planManagementService;
 
-    public RemovePlanController(PlanManagementService planManagementService) {
+    public ActivateJobController(PlanManagementService planManagementService) {
         this.planManagementService = planManagementService;
     }
 
-    @DeleteMapping("/api/plans/{id}")
+    @PutMapping("/api/jobs/{id}/_activate")
     public void handle(@PathVariable Long id) {
-        planManagementService.removePlan(id);
+        planManagementService.activateJob(id);
     }
 }

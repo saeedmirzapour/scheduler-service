@@ -2,7 +2,7 @@ package io.handyprojects.schedulerservice.controller.plan;
 
 import io.handyprojects.schedulerservice.config.constraint.CronString;
 import io.handyprojects.schedulerservice.domain.Plan;
-import io.handyprojects.schedulerservice.service.PlanServiceImpl;
+import io.handyprojects.schedulerservice.service.PlanManagementServiceImpl;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,15 +14,15 @@ import javax.validation.constraints.NotNull;
 @RestController
 public class CreatePlanController {
 
-    private final PlanServiceImpl planService;
+    private final PlanManagementServiceImpl planService;
 
-    public CreatePlanController(PlanServiceImpl planService) {
+    public CreatePlanController(PlanManagementServiceImpl planService) {
         this.planService = planService;
     }
 
     @PostMapping("/api/plans")
     public Plan handle(@Valid @RequestBody Request request) {
-        return planService.create(request.getName(), request.getCronString(), request.getActive());
+        return planService.createPlan(request.getName(), request.getCronString(), request.getActive());
     }
 
     public static class Request {

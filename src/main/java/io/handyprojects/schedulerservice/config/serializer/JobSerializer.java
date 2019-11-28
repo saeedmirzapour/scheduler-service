@@ -19,8 +19,15 @@ public class JobSerializer extends JsonSerializer<Job> {
         gen.writeStringField("curlCommand", StringUtil.valueOf(value.getCurlCommand()));
         gen.writeStringField("order", StringUtil.valueOf(value.getOrder()));
         gen.writeStringField("active", StringUtil.valueOf(value.isActive()));
+
         if (Hibernate.isInitialized(value.getPlan())) {
-            gen.writeObjectField("planId", value.getPlan().getId());
+            gen.writeFieldName("plan");
+            gen.writeStartObject();
+            gen.writeObjectField("id", value.getPlan().getId());
+            gen.writeObjectField("name", value.getPlan().getName());
+            gen.writeObjectField("cronString", value.getPlan().getCronString());
+            gen.writeObjectField("active", value.getPlan().isActive());
+            gen.writeEndObject();
         }
         gen.writeEndObject();
     }

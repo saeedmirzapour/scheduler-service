@@ -19,6 +19,16 @@ public class Job {
     private Plan plan;
     private boolean active;
 
+    protected Job() {
+    }
+
+    public Job(String curlCommand, int order, Plan plan, boolean active) {
+        this.curlCommand = curlCommand;
+        this.order = order;
+        this.plan = plan;
+        this.active = active;
+    }
+
     @Id
     @GeneratedValue
     @Column(name = "id")

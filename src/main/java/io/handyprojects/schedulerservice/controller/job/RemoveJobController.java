@@ -1,4 +1,4 @@
-package io.handyprojects.schedulerservice.controller.plan;
+package io.handyprojects.schedulerservice.controller.job;
 
 import io.handyprojects.schedulerservice.service.PlanManagementService;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -6,16 +6,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class RemovePlanController {
+public class RemoveJobController {
 
     private final PlanManagementService planManagementService;
 
-    public RemovePlanController(PlanManagementService planManagementService) {
+    public RemoveJobController(PlanManagementService planManagementService) {
         this.planManagementService = planManagementService;
     }
 
-    @DeleteMapping("/api/plans/{id}")
+    @DeleteMapping("/api/jobs/{id}")
     public void handle(@PathVariable Long id) {
-        planManagementService.removePlan(id);
+        planManagementService.removeJob(id);
     }
 }
