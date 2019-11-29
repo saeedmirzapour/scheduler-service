@@ -76,4 +76,14 @@ public class Job {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    @Override
+    public String toString() {
+        return "Job{" +
+                "id=" + id +
+                ", curlCommand='" + curlCommand + '\'' +
+                ", order=" + order +
+                ", active=" + active +
+                '}';
+    }
 }
