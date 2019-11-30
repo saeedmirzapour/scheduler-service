@@ -14,14 +14,17 @@ public class RunnerServiceImpl implements RunnerService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final PlanManagementService planManagementService;
+    private final Executor executor;
 
-    public RunnerServiceImpl(PlanManagementService planManagementService) {
+    public RunnerServiceImpl(PlanManagementService planManagementService,
+                             Executor executor) {
         this.planManagementService = planManagementService;
+        this.executor = executor;
     }
 
     @Override
     public void run(Plan plan) {
-        logger.info("run() with jobs{}", plan.getJobs());
+        executor.execute(plan);
     }
 
     @Scheduled(cron = "* * * * * *")
