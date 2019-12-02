@@ -140,7 +140,10 @@ public class PlanManagementServiceImpl implements PlanManagementService {
         return planRepository.findAllWithJobs();
     }
 
+    @Override
+    public void runPlan(Long planId) {
 
+    }
 
 
 }

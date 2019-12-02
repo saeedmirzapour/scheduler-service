@@ -1,6 +1,6 @@
 package io.handyprojects.schedulerservice.controller.execution;
 
-import io.handyprojects.schedulerservice.domain.ExecutionResult;
+import io.handyprojects.schedulerservice.domain.Execution;
 import io.handyprojects.schedulerservice.service.Executor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,8 +16,8 @@ public class GetPageableExecutionResultsController {
         this.executor = executor;
     }
 
-    @GetMapping("/api/execution-results")
-    public Page<ExecutionResult> handle(Pageable pageable) {
+    @GetMapping("/api/executions")
+    public Page<Execution> handle(Pageable pageable) {
         return executor.getAllExecutionResults(pageable);
     }
 }

@@ -9,8 +9,8 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-@Table(name = "execution_result", schema = "scheduler")
-public class ExecutionResult {
+@Table(name = "execution", schema = "scheduler")
+public class Execution {
 
     private Long id;
     private Status status;
@@ -20,10 +20,10 @@ public class ExecutionResult {
     private String curlCommand;
     private String result;
 
-    protected ExecutionResult() {
+    protected Execution() {
     }
 
-    public ExecutionResult(Long jobId, String curlCommand) {
+    public Execution(Long jobId, String curlCommand) {
         setJobId(jobId);
         setCurlCommand(curlCommand);
         setStartDate(DateUtil.now());

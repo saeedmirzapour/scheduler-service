@@ -44,7 +44,7 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
             String[] exceptionClassNameArray = ex.getClass().getName().split("\\.");
             return exceptionClassNameArray[exceptionClassNameArray.length - 1];
         } catch (Exception e) {
-            logger.error("Error in getErrorClassName()", e);
+            logger.error("error in getErrorClassName()", e);
         }
         return null;
     }
@@ -53,7 +53,7 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
         try {
             return messageSource.getMessage(code, new String[]{}, locale);
         } catch (Exception e) {
-            logger.error("Error in findMessage()", e);
+            logger.error("error in findMessage()", e);
         }
         return null;
     }

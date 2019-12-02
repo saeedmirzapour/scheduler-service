@@ -18,7 +18,7 @@ public class CronUtil {
         try {
             return Optional.of(new CronExpression(cronString));
         } catch (ParseException e) {
-            logger.error("Problem in converting String to cron expression", e);
+            logger.error("problem in converting String to cron expression", e);
             return Optional.empty();
         }
     }

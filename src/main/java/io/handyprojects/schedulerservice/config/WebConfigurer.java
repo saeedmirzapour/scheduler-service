@@ -25,7 +25,7 @@ public class WebConfigurer implements ServletContextInitializer, WebMvcConfigure
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         if (env.getActiveProfiles().length != 0) {
-            logger.info("Web application configuration, using profiles: {}", (Object[]) env.getActiveProfiles());
+            logger.info("web application configuration, using profiles: {}", (Object[]) env.getActiveProfiles());
         }
     }
 

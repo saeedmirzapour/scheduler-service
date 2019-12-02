@@ -23,4 +23,5 @@ public interface PlanManagementService {
     Page<Job> getPageableJobs(Pageable pageable);
     void removeJob(Long jobId);
     List<Plan> getAllWithJobs();
+    void runPlan(Long planId);
 }

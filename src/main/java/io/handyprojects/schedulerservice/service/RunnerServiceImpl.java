@@ -24,7 +24,13 @@ public class RunnerServiceImpl implements RunnerService {
 
     @Override
     public void run(Plan plan) {
+        logger.info("going to run plan:{}", plan);
         executor.execute(plan);
+    }
+
+    @Override
+    public void run(Long planId) {
+        run(planManagementService.getPlan(planId));
     }
 
     @Scheduled(cron = "* * * * * *")

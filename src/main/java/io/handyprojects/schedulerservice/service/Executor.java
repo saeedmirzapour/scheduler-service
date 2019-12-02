@@ -1,9 +1,9 @@
 package io.handyprojects.schedulerservice.service;
 
 import io.handyprojects.schedulerservice.domain.Job;
-import io.handyprojects.schedulerservice.domain.ExecutionResult;
+import io.handyprojects.schedulerservice.domain.Execution;
 import io.handyprojects.schedulerservice.domain.Plan;
-import io.handyprojects.schedulerservice.repository.ExecutionResultRepository;
+import io.handyprojects.schedulerservice.repository.ExecutionRepository;
 import io.handyprojects.schedulerservice.util.DateUtil;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
@@ -25,15 +25,15 @@ import java.util.stream.Collectors;
 public class Executor {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private final ExecutionResultRepository executionResultRepository;
+    private final ExecutionRepository executionRepository;
 
-    public Executor(ExecutionResultRepository executionResultRepository) {
-        this.executionResultRepository = executionResultRepository;
+    public Executor(ExecutionRepository executionRepository) {
+        this.executionRepository = executionRepository;
     }
 
     @Async
     public void execute(Plan plan) {
-        logger.info("Starting to execute plan{}", plan);
+        logger.info("starting to execute plan:{}", plan);
         List<Job> jobs = plan.getJobs();
         jobs.sort(Comparator.comparingInt(Job::getOrder));
         jobs.stream().filter(Job::isActive).forEach(this::doJob);
@@ -41,12 +41,12 @@ public class Executor {
 
     private void doJob(Job job) {
         String curlCommand = job.getCurlCommand();
-        ExecutionResult result = new ExecutionResult(job.getId(), curlCommand);
+        Execution result = new Execution(job.getId(), curlCommand);
         runCommand(curlCommand, result);
         saveResult(result);
     }
 
-    private void runCommand(String command, ExecutionResult result) {
+    private void runCommand(String command, Execution result) {
         try {
             ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
             Process process = processBuilder.start();
@@ -56,30 +56,30 @@ public class Executor {
             InputStreamReader streamReader;
             if (process.exitValue() == 0) {
                 streamReader = new InputStreamReader(inputStream);
-                result.setStatus(ExecutionResult.Status.SUCCEEDED);
+                result.setStatus(Execution.Status.SUCCEEDED);
             }
             else {
                 streamReader = new InputStreamReader(errorStream);
-                result.setStatus(ExecutionResult.Status.FAILED);
+                result.setStatus(Execution.Status.FAILED);
             }
             BufferedReader bufferedReader = new BufferedReader(streamReader);
             String response = bufferedReader.lines().collect(Collectors.joining());
             result.setResult(response);
             process.destroy();
         } catch (Exception e) {
-            logger.error("Exception happened in starting process", e);
-            result.setStatus(ExecutionResult.Status.FAILED);
+            logger.error("exception happened in starting process", e);
+            result.setStatus(Execution.Status.FAILED);
             result.setResult(ExceptionUtils.getStackTrace(e));
         }
         result.setEndDate(DateUtil.now());
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    void saveResult(ExecutionResult result) {
-        executionResultRepository.save(result);
+    void saveResult(Execution result) {
+        executionRepository.save(result);
     }
 
-    public Page<ExecutionResult> getAllExecutionResults(Pageable pageable) {
-        return executionResultRepository.findAll(pageable);
+    public Page<Execution> getAllExecutionResults(Pageable pageable) {
+        return executionRepository.findAll(pageable);
     }
 }
