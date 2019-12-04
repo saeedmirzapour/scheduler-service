@@ -7,6 +7,7 @@ import io.handyprojects.schedulerservice.exception.JobNotFoundException;
 import io.handyprojects.schedulerservice.exception.PlanNotFoundException;
 import io.handyprojects.schedulerservice.repository.JobRepository;
 import io.handyprojects.schedulerservice.repository.PlanRepository;
+import io.handyprojects.schedulerservice.repository.specification.PlanSpecification;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -80,8 +81,8 @@ public class PlanManagementServiceImpl implements PlanManagementService {
     }
 
     @Override
-    public Page<Plan> getPageablePlan(Pageable pageable) {
-        return planRepository.findAll(pageable);
+    public Page<Plan> getPageablePlan(PlanSpecification planSpecification, Pageable pageable) {
+        return planRepository.findAll(planSpecification, pageable);
     }
 
     @Override

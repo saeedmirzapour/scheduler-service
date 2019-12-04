@@ -2,6 +2,7 @@ package io.handyprojects.schedulerservice.service;
 
 import io.handyprojects.schedulerservice.domain.Job;
 import io.handyprojects.schedulerservice.domain.Plan;
+import io.handyprojects.schedulerservice.repository.specification.PlanSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -14,7 +15,7 @@ public interface PlanManagementService {
     Plan activatePlan(Long planId);
     Plan deactivatePlan(Long planId);
     Plan getPlan(Long planId);
-    Page<Plan> getPageablePlan(Pageable pageable);
+    Page<Plan> getPageablePlan(PlanSpecification planSpecification, Pageable pageable);
     Job activateJob(Long jobId);
     Job createJob(Long planId, String curlCommand, int order, boolean active);
     Job deactivateJob(Long jobId);

@@ -1,5 +1,7 @@
 package io.handyprojects.schedulerservice.util;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Objects;
 
 public class StringUtil {
@@ -14,5 +16,9 @@ public class StringUtil {
         if (Objects.isNull(s))
             return null;
         return s.substring(0, Math.min(s.length(), n));
+    }
+
+    public static boolean nonEmpty(String s) {
+        return !StringUtils.isBlank(s);
     }
 }
