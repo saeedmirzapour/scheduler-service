@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "execution", schema = "scheduler")
-public class Execution {
+public class Execution extends BaseEntity {
 
     private Long id;
     private Status status;

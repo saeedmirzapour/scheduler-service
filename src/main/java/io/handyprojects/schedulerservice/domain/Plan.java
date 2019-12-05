@@ -13,7 +13,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "plan", schema = "scheduler")
 @JsonSerialize(using = PlanSerializer.class)
-public class Plan {
+public class Plan extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 

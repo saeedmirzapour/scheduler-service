@@ -9,7 +9,7 @@ import javax.validation.constraints.NotEmpty;
 @Entity
 @Table(name = "job", schema = "scheduler")
 @JsonSerialize(using = JobSerializer.class)
-public class Job {
+public class Job extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
