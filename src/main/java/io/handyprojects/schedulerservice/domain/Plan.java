@@ -3,6 +3,7 @@ package io.handyprojects.schedulerservice.domain;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.handyprojects.schedulerservice.config.constraint.CronString;
 import io.handyprojects.schedulerservice.config.serializer.PlanSerializer;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -13,6 +14,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "plan", schema = "scheduler")
 @JsonSerialize(using = PlanSerializer.class)
+@Audited
 public class Plan extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

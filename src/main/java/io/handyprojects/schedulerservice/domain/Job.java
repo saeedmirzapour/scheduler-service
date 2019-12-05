@@ -2,6 +2,7 @@ package io.handyprojects.schedulerservice.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.handyprojects.schedulerservice.config.serializer.JobSerializer;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotEmpty;
 @Entity
 @Table(name = "job", schema = "scheduler")
 @JsonSerialize(using = JobSerializer.class)
+@Audited
 public class Job extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
